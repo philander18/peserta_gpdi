@@ -5,7 +5,7 @@ namespace App\Controllers;
 use App\Models\PesertaModel;
 use DateTime;
 
-class Home extends BaseController
+class Checkin extends BaseController
 {
     protected $PesertaModel;
     public function __construct()
@@ -14,12 +14,11 @@ class Home extends BaseController
     }
     public function index(): string
     {
-        // d($this->PesertaModel->list_peserta());
         $data = [
-            'judul' => 'Home',
-            'halaman' => 'home',
-            'list_peserta' => $this->PesertaModel->list_peserta()
+            'judul' => 'Checkin',
+            'halaman' => 'checkin',
+            // 'list_peserta' => $this->PesertaModel->list_peserta()
         ];
-        return view('Home/index', $data);
+        return view('Inproses/index', $data);
     }
 }
