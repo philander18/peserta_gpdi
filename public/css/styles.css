@@ -1,0 +1,269 @@
+html, body {
+  margin: 0;
+  padding: 0;
+  font-family: "Fira Sans", sans-serif;
+}
+
+body {
+  background-image: url(../images/background.png);
+  background-repeat: repeat;
+}
+
+/* font fira sans */
+.fira-sans-thin {
+font-family: "Fira Sans", sans-serif;
+font-weight: 100;
+font-style: normal;
+}
+
+.fira-sans-extralight {
+font-family: "Fira Sans", sans-serif;
+font-weight: 200;
+font-style: normal;
+}
+
+.fira-sans-light {
+font-family: "Fira Sans", sans-serif;
+font-weight: 300;
+font-style: normal;
+}
+
+.fira-sans-regular {
+font-family: "Fira Sans", sans-serif;
+font-weight: 400;
+font-style: normal;
+}
+
+.fira-sans-medium {
+font-family: "Fira Sans", sans-serif;
+font-weight: 500;
+font-style: normal;
+}
+
+.fira-sans-semibold {
+font-family: "Fira Sans", sans-serif;
+font-weight: 600;
+font-style: normal;
+}
+
+.fira-sans-bold {
+font-family: "Fira Sans", sans-serif;
+font-weight: 700;
+font-style: normal;
+}
+
+.fira-sans-extrabold {
+font-family: "Fira Sans", sans-serif;
+font-weight: 800;
+font-style: normal;
+}
+
+.fira-sans-black {
+font-family: "Fira Sans", sans-serif;
+font-weight: 900;
+font-style: normal;
+}
+
+.fira-sans-thin-italic {
+font-family: "Fira Sans", sans-serif;
+font-weight: 100;
+font-style: italic;
+}
+
+.fira-sans-extralight-italic {
+font-family: "Fira Sans", sans-serif;
+font-weight: 200;
+font-style: italic;
+}
+
+.fira-sans-light-italic {
+font-family: "Fira Sans", sans-serif;
+font-weight: 300;
+font-style: italic;
+}
+
+.fira-sans-regular-italic {
+font-family: "Fira Sans", sans-serif;
+font-weight: 400;
+font-style: italic;
+}
+
+.fira-sans-medium-italic {
+font-family: "Fira Sans", sans-serif;
+font-weight: 500;
+font-style: italic;
+}
+
+.fira-sans-semibold-italic {
+font-family: "Fira Sans", sans-serif;
+font-weight: 600;
+font-style: italic;
+}
+
+.fira-sans-bold-italic {
+font-family: "Fira Sans", sans-serif;
+font-weight: 700;
+font-style: italic;
+}
+
+.fira-sans-extrabold-italic {
+font-family: "Fira Sans", sans-serif;
+font-weight: 800;
+font-style: italic;
+}
+
+.fira-sans-black-italic {
+font-family: "Fira Sans", sans-serif;
+font-weight: 900;
+font-style: italic;
+}
+
+/* font lilita one */
+.lilita-one-regular {
+font-family: "Lilita One", sans-serif;
+font-weight: 400;
+font-style: normal;
+}
+
+/* font protest revolution */
+.protest-revolution-regular {
+font-family: "Protest Revolution", sans-serif;
+font-weight: 400;
+font-style: normal;
+}
+
+/* Navbar */
+nav {
+  display: flex;
+  background-color: rgb(255, 255, 255,0);
+  justify-content: space-between;
+  padding: 0px 1rem;
+  height: 50px;
+  align-items: center;
+}
+nav ul {
+  display: flex;
+  list-style: none;
+  width: 70%;
+  justify-content: right;
+  align-items: center;
+  margin-bottom: 0px;
+}
+nav ul li {
+  width: 80px;
+  text-align: center;
+  font-weight: bold;
+  border-radius: 5px;
+  margin: 2px 7px;
+}
+nav ul li a {
+  font-family: "Protest Revolution", sans-serif;
+  color: rgb(32, 108, 249);
+  text-decoration: none;
+  font-size: 1rem;
+}
+nav ul li a:hover {
+  color: rgb(8, 0, 0);
+}
+a.aktif {
+  color: rgb(31, 3, 244);
+}
+
+/* Hamburger Menu */
+.menu-toggles {
+  display: none;
+  flex-direction: column;
+  height: 20px;
+  justify-content: space-between;
+  position: relative;
+  z-index: 7;
+}
+.menu-toggles input {
+  position: absolute;
+  width: 40px;
+  height: 28px;
+  left: -6px;
+  top: -3px;
+  opacity: 0;
+  cursor: pointer;
+  z-index: 8;
+}
+.menu-toggles span {
+  display: block;
+  width: 28px;
+  height: 3px;
+  background-color: rgb(20, 19, 20);
+  border-radius: 3px;
+  transition: all 0.5s;
+}
+
+/* Hamburger menu animation */
+.menu-toggles span:nth-child(2) {
+  transform-origin: 0 0;
+}
+.menu-toggles span:nth-child(4) {
+  transform-origin: 0 100%;
+}
+.menu-toggles input:checked ~ span:nth-child(2){
+  background-color: rgb(0, 0, 0);
+  transform: rotate(45deg) translate(-1px, -1px);
+}
+.menu-toggles input:checked ~ span:nth-child(4){
+  background-color: rgb(0, 0, 0);
+  transform: rotate(-45deg) translate(-1px, 0);
+}
+.menu-toggles input:checked ~ span:nth-child(3){
+  opacity: 0;
+  transform: scale(0);
+}
+/* Responsive Breakpoint */
+
+/* Ukuran Tablet nav*/
+@media screen and (max-width: 768px) {
+  nav ul {
+    width: 80%;
+  }
+}
+
+/* Ukuran Mobile nav*/
+@media screen and (max-width: 576px) {
+  nav ul {
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 100%;
+    height: 100vh;
+    margin: 0px;
+    padding: 1rem;
+    justify-content: left;
+    align-items: center;
+    flex-direction: column;
+    z-index: 6;
+    background-image: url(../images/background.png);
+    transform: translateX(100%);
+    transition: all 0.2s;
+    opacity: 0;
+    display: none;
+  }
+  nav ul li {
+      width: 120px;
+      font-size: 1.4rem;
+      margin: 1rem;
+  }
+  nav ul.slide {
+    transform: translateX(0);
+    opacity: 1;
+    display: flex;
+  }
+  .menu-toggles {
+    display: flex;
+  }
+}
+
+/* Pengaturan card list peserta per gereja */
+.list-gereja {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, 260px);
+}
+
+
