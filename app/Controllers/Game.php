@@ -19,6 +19,6 @@ class Game extends BaseController
             'halaman' => 'game',
             // 'list_peserta' => $this->PesertaModel->list_peserta()
         ];
-        return view('Inproses/index', $data);
+        return view('Portal/index', $data);
     }
 }

@@ -24,6 +24,7 @@
     <script src="https://unpkg.com/@popperjs/core@2"></script>
     <?= $this->include('Templates/script'); ?>
     <?= $this->include('Home/script'); ?>
+    <?= $this->include('Checkin/script'); ?>
 </body>
 
 </html>

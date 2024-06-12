@@ -266,4 +266,39 @@ a.aktif {
   grid-template-columns: repeat(auto-fit, 260px);
 }
 
+/* default tabel dari philander */
+.phil-tabel {
+  display: grid;
+  grid-template-columns: minmax(360px, 600px);
+  place-content: center;
+  row-gap: 0.5rem;
+  grid-template-areas: 'search'
+      'tabel'
+}
+.phil-tabel .search {
+  display: grid;
+  grid-area: search;
+  grid-template-columns: 60px 1fr;
+  column-gap: 0.3rem;
+  place-items: center start;
+  margin: 0px 0.5rem;
+  box-sizing: border-box;
+}
+.phil-tabel .tabel {
+  display: grid;
+  grid-area: tabel;
+  grid-template-columns: 1fr;
+  margin: 0px 0.5rem;
+  box-sizing: border-box;
+}
+
+/* Form Portal */
+.portal {
+  display: grid;
+  grid-template-columns: minmax(360px, 450px);
+  place-content: center;
+  place-items: center;
+  row-gap: 0.5rem;
+}
+
 
