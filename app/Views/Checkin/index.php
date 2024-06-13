@@ -1,8 +1,10 @@
 <?= $this->extend('Templates/index'); ?>
 <?= $this->section('page-content'); ?>
 <?= $this->include('Templates/navbar'); ?>
-<div class="container-fluid">
+<div class="container-fluid mt-2">
     <div class="phil-tabel">
+        <div class="flash mt-2 mb-0">
+        </div>
         <div class="search">
             <label class="text-dark">Search :</label>
             <input class="form-control form-control-sm" type="search" style="background: rgba(255, 255, 255, 0.5);" id="keyword-checkin">
@@ -13,16 +15,20 @@
                     <tr class="table-dark">
                         <th class="text-center">Nama</th>
                         <th class="text-center">Gereja</th>
-                        <th class="text-center">Action</th>
+                        <th class="text-center <?= ($akses == 'peserta') ? "d-none" : ""; ?>">Action</th>
                     </tr>
                 </thead>
                 <tbody>
                     <?php foreach ($checkin as $row) : ?>
                         <tr class="">
-                            <td style="vertical-align: middle;"><?= $row["nama"]; ?></td>
+                            <td style="vertical-align: middle;"><?= $row["nama"] . " (" . (($row["gender"] == "Laki-laki") ? "L" : "P") . ")"; ?></td>
                             <td class="text-center" style="vertical-align: middle;"><?= $row["gereja"]; ?></td>
-                            <td class="text-center">
-                                <button type="button" id="status" class="btn btn-success btn-sm absen text-light py-0" data-bs-toggle="modal" data-bs-target="#formhapus" data-id="<?= $row["id"]; ?>">Checkin</button>
+                            <td class="text-center <?= ($akses == 'peserta') ? "d-none" : ""; ?>">
+                                <?php if (is_null($row["nomor"])) : ?>
+                                    <button type="button" id="action-checkin" class="btn btn-success btn-sm modal-checkin text-light py-0" data-bs-toggle="modal" data-bs-target="#form-checkin" data-id="<?= $row["id"]; ?>">Checkin</button>
+                                <?php else : ?>
+                                    V
+                                <?php endif ?>
                             </td>
                         </tr>
                     <?php endforeach; ?>
@@ -69,6 +75,28 @@
                     </ul>
                 </div>
             <?php endif; ?>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="form-checkin" tabindex="-1" aria-labelledby="judul" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title fw-bold text-primary" id="judulcheckin">Konfirmasi Check In</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" style="padding-top:2px;">
+                <input type="hidden" id="id-checkin" value="">
+                <input type="hidden" id="nama-checkin" value="">
+                <div class="form-group">
+                    <label class="text-dark fw-bold ms-2 my-2" id="label-checkin"></label>
+                </div>
+                <span class="text-success"></span>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">TIDAK</button>
+                <button type="button" id="confirm-checkin" class="btn btn-primary" data-bs-dismiss="modal">YA</button>
+            </div>
         </div>
     </div>
 </div>

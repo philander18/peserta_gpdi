@@ -24,7 +24,7 @@ class PesertaModel extends Model
     public function list_checkin($keyword, $jumlahlist, $index)
     {
         $where = "(nama like '%" . $keyword . "%' or gereja like '%" . $keyword . "%') and bayar > 0";
-        $all = $this->db->table('peserta')->select('id, nama, gender, gereja, bayar')->where($where)->orderBy("nama ASC")->get()->getResultArray();
+        $all = $this->db->table('peserta')->select('id, nama, gender, gereja, bayar, nomor')->where($where)->orderBy("nomor asc")->get()->getResultArray();
         $jumlahdata = count($all);
         $lastpage = ceil($jumlahdata / $jumlahlist);
         $tabel = array_splice($all, $index);
@@ -38,5 +38,76 @@ class PesertaModel extends Model
     {
         $where = "kode = '" . $kode . "'";
         return $this->db->table('kode')->select('akses, kode')->where($where)->get()->getResultArray();
+    }
+    function get_data_peserta_byid($id)
+    {
+        $query = $this->db->table('peserta')->where('id', $id)->get();
+        return $query->getResult();
+    }
+    function get_kelompok_nomor()
+    {
+        $grup = $this->db->table('peserta')->select("kelompok, count(nama) as jumlah")->groupBy('kelompok')->orderBy('jumlah asc')->get()->getResultArray();
+        switch (count($grup)) {
+            case 1:
+                $data['kelompok'] = 'A';
+                break;
+            case 2:
+                $data['kelompok'] = 'B';
+                break;
+            case 3:
+                $data['kelompok'] = 'C';
+                break;
+            case 4:
+                $data['kelompok'] = 'D';
+                break;
+            case 5:
+                $data['kelompok'] = 'E';
+                break;
+            case 6:
+                $data['kelompok'] = 'F';
+                break;
+            case 7:
+                $data['kelompok'] = 'G';
+                break;
+            case 8:
+                $data['kelompok'] = 'H';
+                break;
+            case 9:
+                $data['kelompok'] = 'I';
+                break;
+            case 10:
+                $data['kelompok'] = 'J';
+                break;
+            case 11:
+                $data['kelompok'] = 'K';
+                break;
+            case 12:
+                $data['kelompok'] = 'L';
+                break;
+            case 13:
+                $data['kelompok'] = 'M';
+                break;
+            case 14:
+                $data['kelompok'] = 'N';
+                break;
+            case 15:
+                $data['kelompok'] = 'O';
+                break;
+            case 16:
+                $data['kelompok'] = 'P';
+                break;
+            default:
+                if (is_null($grup[0]['kelompok'])) {
+                    $data['kelompok'] = $grup[1]['kelompok'];
+                } else {
+                    $data['kelompok'] = $grup[0]['kelompok'];
+                }
+        }
+        $data['nomor'] = $this->db->table('peserta')->select("max(nomor) as nomor")->get()->getResultArray()[0]['nomor'] + 1;
+        return $data;
+    }
+    function update_peserta($data, $id)
+    {
+        return $this->db->table('peserta')->where('id', $id)->update($data);
     }
 }

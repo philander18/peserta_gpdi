@@ -3,16 +3,20 @@
         <tr class="table-dark">
             <th class="text-center">Nama</th>
             <th class="text-center">Gereja</th>
-            <th class="text-center">Action</th>
+            <th class="text-center <?= ($akses == 'peserta') ? "d-none" : ""; ?>">Action</th>
         </tr>
     </thead>
     <tbody>
         <?php foreach ($checkin as $row) : ?>
             <tr class="">
-                <td style="vertical-align: middle;"><?= $row["nama"]; ?></td>
+                <td style="vertical-align: middle;"><?= $row["nama"] . " (" . (($row["gender"] == "Laki-laki") ? "L" : "P") . ")"; ?></td>
                 <td class="text-center" style="vertical-align: middle;"><?= $row["gereja"]; ?></td>
-                <td class="text-center">
-                    <button type="button" id="status" class="btn btn-success btn-sm absen text-light py-0" data-bs-toggle="modal" data-bs-target="#formhapus" data-id="<?= $row["id"]; ?>">Checkin</button>
+                <td class="text-center <?= ($akses == 'peserta') ? "d-none" : ""; ?>">
+                    <?php if (is_null($row["nomor"])) : ?>
+                        <button type="button" id="action-checkin" class="btn btn-success btn-sm modal-checkin text-light py-0" data-bs-toggle="modal" data-bs-target="#form-checkin" data-id="<?= $row["id"]; ?>">Checkin</button>
+                    <?php else : ?>
+                        V
+                    <?php endif ?>
                 </td>
             </tr>
         <?php endforeach; ?>
@@ -63,6 +67,22 @@
     $(document).ready(function() {
         $(".link-checkin").on('click', function() {
             refresh_checkin($('#keyword-checkin').val(), $(this).data('page'));
+        });
+        $('.modal-checkin').on('click', function() {
+            const id = $(this).data('id');
+            $.ajax({
+                url: method_url('Checkin', 'get_data_peserta'),
+                data: {
+                    id: id,
+                },
+                method: 'post',
+                dataType: 'json',
+                success: function(data) {
+                    $('#id-checkin').val(data.id);
+                    $('#nama-checkin').val(data.nama);
+                    $('#label-checkin').html('Checkin <span class="text-success">' + data.nama + '</span> ?');
+                }
+            });
         });
     });
 </script>

@@ -272,8 +272,16 @@ a.aktif {
   grid-template-columns: minmax(360px, 600px);
   place-content: center;
   row-gap: 0.5rem;
-  grid-template-areas: 'search'
+  grid-template-areas: 'flash'
+      'search'
       'tabel'
+}
+.phil-tabel .flash {
+  display: grid;
+  grid-area: flash;
+  grid-template-columns: 1fr;
+  margin: 0px 0.5rem;
+  box-sizing: border-box;
 }
 .phil-tabel .search {
   display: grid;
@@ -300,5 +308,6 @@ a.aktif {
   place-items: center;
   row-gap: 0.5rem;
 }
+
 
 

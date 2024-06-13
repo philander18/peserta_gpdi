@@ -15,6 +15,7 @@ class Checkin extends BaseController
     }
     public function index(): string
     {
+        // d($this->PesertaModel->get_kelompok_nomor());
         $session = session();
         if (!is_null($this->request->getVar('kode'))) {
             if (!empty($this->PesertaModel->akses($this->request->getVar('kode')))) {
@@ -41,6 +42,7 @@ class Checkin extends BaseController
 
     public function refresh_tabel_checkin()
     {
+        $session = session();
         if (isset($_POST['keyword'])) {
             $keyword = $_POST['keyword'];
         } else {
@@ -58,8 +60,30 @@ class Checkin extends BaseController
             'last_checkin' => $this->PesertaModel->list_checkin($keyword, $this->jumlahlist, $index)['lastpage'],
             'jumlah_checkin' => $this->PesertaModel->list_checkin($keyword, $this->jumlahlist, $index)['jumlah'],
             'page' => $page,
+            'akses' => $session->akses
         ];
         return view('Checkin/Tabel/checkin', $data);
+    }
+
+    public function get_data_peserta()
+    {
+        echo json_encode($this->PesertaModel->get_data_peserta_byid($_POST['id'])[0]);
+    }
+    public function input_checkin()
+    {
+        $date = new DateTime();
+        $date = $date->format('Y-m-d H:i:s');
+        $data = [
+            'kelompok' => $this->PesertaModel->get_kelompok_nomor()['kelompok'],
+            'nomor' => $this->PesertaModel->get_kelompok_nomor()['nomor'],
+            'updated_at' => $date
+        ];
+        if ($this->PesertaModel->update_peserta($data, $_POST['id'])) {
+            session()->setFlashdata('pesan', 'Nama ' . $_POST['nama'] . ' mendapat nomor ' . $this->PesertaModel->get_kelompok_nomor()['nomor'] . ' dan masuk kelompok ' . $this->PesertaModel->get_kelompok_nomor()['kelompok']);
+        } else {
+            session()->setFlashdata('pesan', 'Checkin Gagal.');
+        }
+        return view('Templates/flash');
     }
 
     public function pagination($page, $lastpage)
