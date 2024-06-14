@@ -117,7 +117,7 @@
                 </div>
                 <div class="form-modal">
                     <label for="join-checkin" class="form-label">Join Game</label>
-                    <select class="form-select" aria-label=".form-select-sm example" id="join-checkin" style="margin-left:10.4px;">
+                    <select class="form-select" aria-label=".form-select-sm example" id="join-checkin" style="width: 100px;">
                         <option value="1" selected>Ya</option>
                         <option value="0">Tidak</option>
                     </select>

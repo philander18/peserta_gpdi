@@ -337,6 +337,7 @@ div.form-modal {
   display: flex;
   align-items: center;
   margin-bottom: 8px;
+  box-sizing: border-box;
 }
 div.form-modal label {
   flex: 1.8;
