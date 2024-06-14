@@ -309,5 +309,51 @@ a.aktif {
   row-gap: 0.5rem;
 }
 
+/* Form Visitor */
+.konten-visitor {
+  display: grid;
+  grid-template-columns: minmax(360px, 450px) 1fr;
+  margin-top: 15px;
+  grid-template-areas: 'form detail';
+  gap: 1rem;
+}
+.konten-visitor .form-visitor {
+  display: grid;
+  grid-area: form;
+}
+.konten-visitor .detail-visitor {
+  grid-area: detail;
+}
 
+/* Ukuran tablet */
+@media screen and (max-width: 991.98px) {
+  .konten-visitor {
+    grid-template-columns: minmax(360px, 1fr);
+    grid-template-areas: 'form'
+      'detail';
+      place-items: center;
+    box-sizing: border-box;
+  }
+  .konten-visitor .form-visitor {
+    grid-template-columns: minmax(360px, 450px);
+  }
+}
+/* Ukuran landscape mobile */
+@media screen and (max-width: 767.98px) {
+  .konten-tugas {
+      grid-template-columns: 1fr;
+      grid-template-areas: 'rencana'
+        'hasil';
+  }
+  .phil-kotak .konten-kotak2 {
+    grid-template-columns: minmax(320px,450px);
+  }
+  .phil-kotak .search-kotak {
+    justify-self: center;
+  }
+}
+/* Ukuran mobile */
+@media screen and (max-width: 575.98px) {
+
+}
 

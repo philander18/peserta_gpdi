@@ -5,8 +5,6 @@ namespace App\Controllers;
 use App\Models\PesertaModel;
 use DateTime;
 
-use function PHPUnit\Framework\isNull;
-
 class Home extends BaseController
 {
     protected $PesertaModel;

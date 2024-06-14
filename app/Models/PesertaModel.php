@@ -8,6 +8,10 @@ class PesertaModel extends Model
 {
     protected $table = 'peserta';
     protected $allowedFields = ['nama', 'hp', 'gender', 'gereja', 'kata', 'bayar', 'pic', 'wa', 'kelompok', 'nomor', 'updated_at'];
+    public function list_gereja()
+    {
+        return $this->db->table('gereja')->select('nama')->orderBy('nama', 'asc')->get()->getResultArray();
+    }
     public function list_peserta()
     {
         $list_gereja = $this->db->table('peserta')->select('gereja')->distinct('gereja')->where('bayar is not null')->orderBy('gereja ASC')->get()->getResultArray();
@@ -25,6 +29,20 @@ class PesertaModel extends Model
     {
         $where = "(nama like '%" . $keyword . "%' or gereja like '%" . $keyword . "%') and bayar > 0";
         $all = $this->db->table('peserta')->select('id, nama, gender, gereja, bayar, nomor')->where($where)->orderBy("nomor asc")->get()->getResultArray();
+        $jumlahdata = count($all);
+        $lastpage = ceil($jumlahdata / $jumlahlist);
+        $tabel = array_splice($all, $index);
+        array_splice($tabel, $jumlahlist);
+        $data['lastpage'] = $lastpage;
+        $data['tabel'] = $tabel;
+        $data['jumlah'] = $jumlahdata;
+        return $data;
+    }
+
+    public function list_visitor($keyword, $jumlahlist, $index)
+    {
+        $where = "nama like '%" . $keyword . "%' or gereja like '%" . $keyword . "%'";
+        $all = $this->db->table('visitor')->select('id, nama, gender, gereja, status, masuk')->where($where)->orderBy("nama asc")->get()->getResultArray();
         $jumlahdata = count($all);
         $lastpage = ceil($jumlahdata / $jumlahlist);
         $tabel = array_splice($all, $index);
@@ -109,5 +127,9 @@ class PesertaModel extends Model
     function update_peserta($data, $id)
     {
         return $this->db->table('peserta')->where('id', $id)->update($data);
+    }
+    function input_visitor($data)
+    {
+        return $this->db->table('visitor')->insert($data);
     }
 }
