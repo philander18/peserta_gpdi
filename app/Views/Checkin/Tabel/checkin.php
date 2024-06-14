@@ -9,7 +9,7 @@
     <tbody>
         <?php foreach ($checkin as $row) : ?>
             <tr class="">
-                <td style="vertical-align: middle;"><?= $row["nama"] . " (" . (($row["gender"] == "Laki-laki") ? "L" : "P") . ")"; ?></td>
+                <td style="vertical-align: middle;"><?= ucwords(strtolower($row["nama"])) . " (" . (($row["gender"] == "Laki-laki") ? "L" : "P") . ")"; ?></td>
                 <td class="text-center" style="vertical-align: middle;"><?= $row["gereja"]; ?></td>
                 <td class="text-center <?= ($akses == 'peserta') ? "d-none" : ""; ?>">
                     <?php if (is_null($row["nomor"])) : ?>
@@ -81,6 +81,7 @@
                     $('#id-checkin').val(data.id);
                     $('#nama-checkin').val(data.nama);
                     $('#label-checkin').html('Checkin <span class="text-success">' + data.nama + '</span> ?');
+                    $('#join-checkin').val("1");
                 }
             });
         });

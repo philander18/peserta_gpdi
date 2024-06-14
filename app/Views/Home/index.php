@@ -2,6 +2,7 @@
 <?= $this->section('page-content'); ?>
 <?= $this->include('Templates/navbar'); ?>
 <div class="container mt-4">
+    <h2 class="text-center lilita-one-regular text-primary mb-3">Daftar List Per Gereja</h2>
     <?php foreach ($list_peserta as $row) : ?>
         <div class="card mb-4">
             <div class="card-header text-center bg-secondary">

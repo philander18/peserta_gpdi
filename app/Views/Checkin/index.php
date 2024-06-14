@@ -2,7 +2,7 @@
 <?= $this->section('page-content'); ?>
 <?= $this->include('Templates/navbar'); ?>
 <div class="container-fluid mt-2">
-    <div class="phil-tabel">
+    <div class="phil-tabel mb-4 <?= ($akses == 'peserta') ? "d-none" : ""; ?>">
         <div class="flash mt-2 mb-0">
         </div>
         <div class="search">
@@ -21,9 +21,9 @@
                 <tbody>
                     <?php foreach ($checkin as $row) : ?>
                         <tr class="">
-                            <td style="vertical-align: middle;"><?= $row["nama"] . " (" . (($row["gender"] == "Laki-laki") ? "L" : "P") . ")"; ?></td>
+                            <td style="vertical-align: middle;"><?= ucwords(strtolower($row["nama"])) . " (" . (($row["gender"] == "Laki-laki") ? "L" : "P") . ")"; ?></td>
                             <td class="text-center" style="vertical-align: middle;"><?= $row["gereja"]; ?></td>
-                            <td class="text-center <?= ($akses == 'peserta') ? "d-none" : ""; ?>">
+                            <td class="text-center">
                                 <?php if (is_null($row["nomor"])) : ?>
                                     <button type="button" id="action-checkin" class="btn btn-success btn-sm modal-checkin text-light py-0" data-bs-toggle="modal" data-bs-target="#form-checkin" data-id="<?= $row["id"]; ?>">Checkin</button>
                                 <?php else : ?>
@@ -77,6 +77,29 @@
             <?php endif; ?>
         </div>
     </div>
+    <?php if ($list_kelompok) : ?>
+        <h2 class="text-center lilita-one-regular text-primary judul-checkin">Daftar Kelompok</h2>
+    <?php else : ?>
+        <h2 class="text-center lilita-one-regular text-primary judul-checkin">Checkin dilakukan di hari H sekaligus pembentukan kelompok</h2>
+    <?php endif; ?>
+    <div class="grup-checkin">
+        <?php foreach ($list_kelompok as $row) : ?>
+            <div class="card">
+                <div class="card-header text-center bg-secondary">
+                    <h3><?= $row["kelompok"]; ?></h3>
+                </div>
+                <div class="card-body">
+                    <div>
+                        <ol class="mb-0">
+                            <?php foreach ($row["list"] as $list) : ?>
+                                <li><?= ucwords(strtolower($list["nama"])); ?></li>
+                            <?php endforeach; ?>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        <?php endforeach; ?>
+    </div>
 </div>
 <div class="modal fade" id="form-checkin" tabindex="-1" aria-labelledby="judul" aria-hidden="true">
     <div class="modal-dialog">
@@ -88,10 +111,17 @@
             <div class="modal-body" style="padding-top:2px;">
                 <input type="hidden" id="id-checkin" value="">
                 <input type="hidden" id="nama-checkin" value="">
-                <div class="form-group">
-                    <label class="text-dark fw-bold ms-2 my-2" id="label-checkin"></label>
+                <div>
+                    <label class="text-dark fw-bold my-2" id="label-checkin"></label>
+                    <span class="text-success"></span>
                 </div>
-                <span class="text-success"></span>
+                <div class="form-modal">
+                    <label for="join-checkin" class="form-label">Join Game</label>
+                    <select class="form-select" aria-label=".form-select-sm example" id="join-checkin" style="margin-left:10.4px;">
+                        <option value="1" selected>Ya</option>
+                        <option value="0">Tidak</option>
+                    </select>
+                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">TIDAK</button>

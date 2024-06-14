@@ -24,6 +24,22 @@ class PesertaModel extends Model
         }
         return $peserta;
     }
+    public function list_kelompok()
+    {
+        $list_kelompok = $this->db->table('peserta')->select('kelompok')->distinct('kelompok')->where("kelompok is not null")->orderBy('kelompok ASC')->get()->getResultArray();
+        if (empty($list_kelompok)) {
+            $peserta = [];
+        } else {
+            foreach ($list_kelompok as $row) {
+                $where = "kelompok = '" . $row['kelompok'] . "'";
+                $peserta[] = [
+                    'kelompok' => $row['kelompok'],
+                    'list' => $this->db->table('peserta')->select('nama, gender, gereja, kelompok, nomor')->where($where)->get()->getResultArray(),
+                ];
+            }
+        }
+        return $peserta;
+    }
 
     public function list_checkin($keyword, $jumlahlist, $index)
     {

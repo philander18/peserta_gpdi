@@ -15,7 +15,7 @@ class Checkin extends BaseController
     }
     public function index(): string
     {
-        // d($this->PesertaModel->get_kelompok_nomor());
+        // d($this->PesertaModel->list_kelompok());
         $session = session();
         if (!is_null($this->request->getVar('kode'))) {
             if (!empty($this->PesertaModel->akses($this->request->getVar('kode')))) {
@@ -35,6 +35,7 @@ class Checkin extends BaseController
             'last_checkin' => $this->PesertaModel->list_checkin("", $this->jumlahlist, 0)['lastpage'],
             'jumlah_checkin' => $this->PesertaModel->list_checkin("", $this->jumlahlist, 0)['jumlah'],
             'page' => $page,
+            'list_kelompok' => $this->PesertaModel->list_kelompok(),
             'akses' => $session->akses
         ];
         return view('Checkin/index', $data);
@@ -64,6 +65,13 @@ class Checkin extends BaseController
         ];
         return view('Checkin/Tabel/checkin', $data);
     }
+    public function refresh_grup_checkin()
+    {
+        $data = [
+            'list_kelompok' => $this->PesertaModel->list_kelompok(),
+        ];
+        return view('Checkin/Tabel/grupcheckin', $data);
+    }
 
     public function get_data_peserta()
     {
@@ -73,15 +81,27 @@ class Checkin extends BaseController
     {
         $date = new DateTime();
         $date = $date->format('Y-m-d H:i:s');
-        $data = [
-            'kelompok' => $this->PesertaModel->get_kelompok_nomor()['kelompok'],
-            'nomor' => $this->PesertaModel->get_kelompok_nomor()['nomor'],
-            'updated_at' => $date
-        ];
-        if ($this->PesertaModel->update_peserta($data, $_POST['id'])) {
-            session()->setFlashdata('pesan', 'Nama ' . $_POST['nama'] . ' mendapat nomor ' . $this->PesertaModel->get_kelompok_nomor()['nomor'] . ' dan masuk kelompok ' . $this->PesertaModel->get_kelompok_nomor()['kelompok']);
+        if ($_POST['kelompok'] == 1) {
+            $data = [
+                'kelompok' => $this->PesertaModel->get_kelompok_nomor()['kelompok'],
+                'nomor' => $this->PesertaModel->get_kelompok_nomor()['nomor'],
+                'updated_at' => $date
+            ];
+            if ($this->PesertaModel->update_peserta($data, $_POST['id'])) {
+                session()->setFlashdata('pesan', 'Nama ' . $_POST['nama'] . ' mendapat nomor ' . $data['nomor'] . ' dan masuk kelompok ' . $data['kelompok']);
+            } else {
+                session()->setFlashdata('pesan', 'Checkin Gagal.');
+            }
         } else {
-            session()->setFlashdata('pesan', 'Checkin Gagal.');
+            $data = [
+                'nomor' => $this->PesertaModel->get_kelompok_nomor()['nomor'],
+                'updated_at' => $date
+            ];
+            if ($this->PesertaModel->update_peserta($data, $_POST['id'])) {
+                session()->setFlashdata('pesan', 'Nama ' . $_POST['nama'] . ' mendapat nomor ' . $data['nomor'] . ' dan tidak masuk kelompok.');
+            } else {
+                session()->setFlashdata('pesan', 'Checkin Gagal.');
+            }
         }
         return view('Templates/flash');
     }
