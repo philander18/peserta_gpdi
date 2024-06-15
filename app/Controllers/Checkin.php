@@ -15,7 +15,6 @@ class Checkin extends BaseController
     }
     public function index(): string
     {
-        // d($this->PesertaModel->list_kelompok());
         $session = session();
         if (!is_null($this->request->getVar('kode'))) {
             if (!empty($this->PesertaModel->akses($this->request->getVar('kode')))) {
@@ -36,6 +35,7 @@ class Checkin extends BaseController
             'jumlah_checkin' => $this->PesertaModel->list_checkin("", $this->jumlahlist, 0)['jumlah'],
             'page' => $page,
             'list_kelompok' => $this->PesertaModel->list_kelompok(),
+            'jumlah_absen' => $this->PesertaModel->get_kelompok_nomor()['nomor'] - 1,
             'akses' => $session->akses
         ];
         return view('Checkin/index', $data);
@@ -61,6 +61,7 @@ class Checkin extends BaseController
             'last_checkin' => $this->PesertaModel->list_checkin($keyword, $this->jumlahlist, $index)['lastpage'],
             'jumlah_checkin' => $this->PesertaModel->list_checkin($keyword, $this->jumlahlist, $index)['jumlah'],
             'page' => $page,
+            'jumlah_absen' => $this->PesertaModel->get_kelompok_nomor()['nomor'] - 1,
             'akses' => $session->akses
         ];
         return view('Checkin/Tabel/checkin', $data);

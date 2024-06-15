@@ -63,6 +63,7 @@
         </ul>
     </div>
 <?php endif; ?>
+<h3 class="mt-3 text-success">Jumlah Checkin : <?= $jumlah_absen; ?></h3>
 <script>
     $(document).ready(function() {
         $(".link-checkin").on('click', function() {

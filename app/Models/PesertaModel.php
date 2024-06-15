@@ -38,6 +38,10 @@ class PesertaModel extends Model
                 ];
             }
         }
+        $peserta[] = [
+            'kelompok' => 'Tidak Masuk Kelompok',
+            'list' => $this->db->table('peserta')->select('nama, gender, gereja, kelompok, nomor')->where("kelompok is null and nomor is not null")->get()->getResultArray(),
+        ];
         return $peserta;
     }
 
