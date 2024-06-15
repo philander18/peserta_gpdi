@@ -56,8 +56,26 @@
                 success: function(data) {
                     $('#id-checkin').val(data.id);
                     $('#nama-checkin').val(data.nama);
-                    $('#label-checkin').html('Checkin <span class="text-success">' + data.nama + '</span> ?');
+                    $('#label-checkin').html('Check In <span class="text-success">' + data.nama + '</span> ?');
                     $('#join-checkin').val("1");
+                }
+            });
+        });
+        $('.modal-info-checkin').on('click', function() {
+            const id = $(this).data('id');
+            $.ajax({
+                url: method_url('Checkin', 'get_data_peserta'),
+                data: {
+                    id: id,
+                },
+                method: 'post',
+                dataType: 'json',
+                success: function(data) {
+                    if (data.kelompok == null) {
+                        $('#label-info-checkin').html(data.nama + '<br><span class="text-danger">Tidak masuk kelompok</span><br>Nomor <span class="text-success">' + data.nomor + '</span>.');
+                    } else {
+                        $('#label-info-checkin').html(data.nama + '<br>Kelompok <span class="text-success">' + data.kelompok + '</span><br>Nomor <span class="text-success">' + data.nomor + '</span>.');
+                    }
                 }
             });
         });

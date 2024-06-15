@@ -21,7 +21,15 @@
                 <tbody>
                     <?php foreach ($checkin as $row) : ?>
                         <tr class="">
-                            <td style="vertical-align: middle;"><?= ucwords(strtolower($row["nama"])) . " (" . (($row["gender"] == "Laki-laki") ? "L" : "P") . ")"; ?></td>
+                            <td style="vertical-align: middle;">
+                                <?php if (is_null($row["nomor"])) : ?>
+                                    <?= ucwords(strtolower($row["nama"])) . " (" . (($row["gender"] == "Laki-laki") ? "L" : "P") . ")"; ?>
+                                <?php else : ?>
+                                    <a href="" class="link-primary modal-info-checkin" data-bs-toggle="modal" data-bs-target="#info-checkin" data-id="<?= $row["id"]; ?>" id="nama-info-checkin">
+                                        <?= ucwords(strtolower($row["nama"])) . " (" . (($row["gender"] == "Laki-laki") ? "L" : "P") . ")"; ?>
+                                    </a>
+                                <?php endif ?>
+                            </td>
                             <td class="text-center" style="vertical-align: middle;"><?= $row["gereja"]; ?></td>
                             <td class="text-center">
                                 <?php if (is_null($row["nomor"])) : ?>
@@ -75,7 +83,7 @@
                     </ul>
                 </div>
             <?php endif; ?>
-            <h3 class="mt-3 text-success">Jumlah Checkin : <?= $jumlah_absen; ?></h3>
+            <h3 class="mt-3 text-success">Jumlah Check In : <?= $jumlah_absen; ?></h3>
         </div>
     </div>
     <?php if ($list_kelompok) : ?>
@@ -114,7 +122,6 @@
                 <input type="hidden" id="nama-checkin" value="">
                 <div>
                     <label class="text-dark fw-bold my-2" id="label-checkin"></label>
-                    <span class="text-success"></span>
                 </div>
                 <div class="form-modal">
                     <label for="join-checkin" class="form-label">Join Game</label>
@@ -127,6 +134,24 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">TIDAK</button>
                 <button type="button" id="confirm-checkin" class="btn btn-primary" data-bs-dismiss="modal">YA</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="info-checkin" tabindex="-1" aria-labelledby="judul" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title fw-bold text-primary" id="judulcheckin">Informasi Check In</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" style="padding-top:2px;">
+                <div>
+                    <label class="text-dark fw-bold my-2" id="label-info-checkin"></label>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
             </div>
         </div>
     </div>

@@ -9,9 +9,17 @@
     <tbody>
         <?php foreach ($checkin as $row) : ?>
             <tr class="">
-                <td style="vertical-align: middle;"><?= ucwords(strtolower($row["nama"])) . " (" . (($row["gender"] == "Laki-laki") ? "L" : "P") . ")"; ?></td>
+                <td style="vertical-align: middle;">
+                    <?php if (is_null($row["nomor"])) : ?>
+                        <?= ucwords(strtolower($row["nama"])) . " (" . (($row["gender"] == "Laki-laki") ? "L" : "P") . ")"; ?>
+                    <?php else : ?>
+                        <a href="" class="link-primary modal-info-checkin" data-bs-toggle="modal" data-bs-target="#info-checkin" data-id="<?= $row["id"]; ?>" id="nama-info-checkin">
+                            <?= ucwords(strtolower($row["nama"])) . " (" . (($row["gender"] == "Laki-laki") ? "L" : "P") . ")"; ?>
+                        </a>
+                    <?php endif ?>
+                </td>
                 <td class="text-center" style="vertical-align: middle;"><?= $row["gereja"]; ?></td>
-                <td class="text-center <?= ($akses == 'peserta') ? "d-none" : ""; ?>">
+                <td class="text-center">
                     <?php if (is_null($row["nomor"])) : ?>
                         <button type="button" id="action-checkin" class="btn btn-success btn-sm modal-checkin text-light py-0" data-bs-toggle="modal" data-bs-target="#form-checkin" data-id="<?= $row["id"]; ?>">Checkin</button>
                     <?php else : ?>
@@ -63,7 +71,7 @@
         </ul>
     </div>
 <?php endif; ?>
-<h3 class="mt-3 text-success">Jumlah Checkin : <?= $jumlah_absen; ?></h3>
+<h3 class="mt-3 text-success">Jumlah Check In : <?= $jumlah_absen; ?></h3>
 <script>
     $(document).ready(function() {
         $(".link-checkin").on('click', function() {
@@ -83,6 +91,24 @@
                     $('#nama-checkin').val(data.nama);
                     $('#label-checkin').html('Checkin <span class="text-success">' + data.nama + '</span> ?');
                     $('#join-checkin').val("1");
+                }
+            });
+        });
+        $('.modal-info-checkin').on('click', function() {
+            const id = $(this).data('id');
+            $.ajax({
+                url: method_url('Checkin', 'get_data_peserta'),
+                data: {
+                    id: id,
+                },
+                method: 'post',
+                dataType: 'json',
+                success: function(data) {
+                    if (data.kelompok == null) {
+                        $('#label-info-checkin').html(data.nama + '<br><span class="text-danger">Tidak masuk kelompok</span><br>Nomor <span class="text-success">' + data.nomor + '</span>.');
+                    } else {
+                        $('#label-info-checkin').html(data.nama + '<br>Kelompok <span class="text-success">' + data.kelompok + '</span><br>Nomor <span class="text-success">' + data.nomor + '</span>.');
+                    }
                 }
             });
         });
