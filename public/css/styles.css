@@ -360,8 +360,8 @@ div.form-modal input,div.form-modal textarea,div.form-modal select {
 }
 .input-game .input-kelompok-game {
   display: grid;
-  grid-template-columns: 160px 200px;
-  gap: 1rem;
+  grid-template-columns: 160px 1fr;
+  gap: 0.5rem;
   padding: 0.8rem;
   box-sizing: border-box;
 }
