@@ -33,4 +33,5 @@
             </div>
         <?php endforeach; ?>
     </div>
-    <?= $this->endSection(); ?>
+</div>
+<?= $this->endSection(); ?>

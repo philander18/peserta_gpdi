@@ -274,7 +274,7 @@ a.aktif {
   row-gap: 0.5rem;
   grid-template-areas: 'flash'
       'search'
-      'tabel'
+      'tabel';
 }
 .phil-tabel .flash {
   display: grid;
@@ -286,7 +286,7 @@ a.aktif {
 .phil-tabel .search {
   display: grid;
   grid-area: search;
-  grid-template-columns: 60px 1fr;
+  grid-template-columns: 60px 280px;
   column-gap: 0.3rem;
   place-items: center start;
   margin: 0px 0.5rem;
@@ -297,6 +297,38 @@ a.aktif {
   grid-area: tabel;
   grid-template-columns: 1fr;
   margin: 0px 0.5rem;
+  box-sizing: border-box;
+}
+
+/* default kotak dari philander */
+.phil-kotak {
+  display: grid;
+  grid-template-columns: 1fr;
+  place-content: center;
+  row-gap: 0.5rem;
+  grid-template-areas: 'search'
+      'kotak';
+  box-sizing: border-box;
+}
+.phil-kotak .search {
+  display: grid;
+  grid-area: search;
+  grid-template-columns: 60px 280px;
+  column-gap: 0.3rem;
+  justify-self: center;
+  margin: 0px 0.5rem;
+  box-sizing: border-box;
+}
+.phil-kotak .kotak-harapan, .phil-kotak .kotak-pujian, .phil-kotak .kotak-masukan {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-area: kotak;
+}
+.phil-kotak .kotak {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, 360px);
+  place-content: center;
+  gap: 1rem;
   box-sizing: border-box;
 }
 
@@ -364,6 +396,43 @@ div.form-modal input,div.form-modal textarea,div.form-modal select {
   gap: 0.5rem;
   padding: 0.8rem;
   box-sizing: border-box;
+}
+
+.komentar {
+  display: grid;
+  grid-template-columns: 1fr;
+  place-content: center;
+  margin-top: 15px;
+  gap: 1rem;
+  grid-template-areas: 'form'
+        'harapan'
+        'pujian'
+        'masukan';
+}
+.komentar .form-komentar {
+  display: grid;
+  grid-template-columns: minmax(360px, 450px);
+  grid-template-rows: 60px auto 40px 40px auto 40px;
+  gap: 0.5rem;
+  align-items: center;
+  justify-self: center;
+  grid-area: form;
+  box-sizing: border-box;
+}
+.komentar .harapan-komentar {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-area: harapan;
+}
+.komentar .pujian-komentar {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-area: pujian;
+}
+.komentar .masukan-komentar {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-area: masukan;
 }
 
 /* Ukuran tablet */

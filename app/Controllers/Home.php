@@ -14,6 +14,7 @@ class Home extends BaseController
     }
     public function index(): string
     {
+        header('Clear-Site-Data: "cache"');
         $session = session();
         if (!is_null($this->request->getVar('kode'))) {
             if (!empty($this->PesertaModel->akses($this->request->getVar('kode')))) {

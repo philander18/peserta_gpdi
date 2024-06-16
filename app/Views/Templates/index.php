@@ -27,6 +27,7 @@
     <?= $this->include('Checkin/script'); ?>
     <?= $this->include('Visitor/script'); ?>
     <?= $this->include('Skor/script'); ?>
+    <?= $this->include('Komentar/script'); ?>
 </body>
 
 </html>

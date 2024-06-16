@@ -114,6 +114,46 @@ class PesertaModel extends Model
         }
         return $skor;
     }
+
+    public function list_harapan($keyword, $jumlahlist, $index)
+    {
+        $where = "(nama like '%" . $keyword . "%' or komentar like '%" . $keyword . "%') and kategori = 'Harapan'";
+        $all = $this->db->table('komentar')->where($where)->orderBy("updated_at desc")->get()->getResultArray();
+        $jumlahdata = count($all);
+        $lastpage = ceil($jumlahdata / $jumlahlist);
+        $tabel = array_splice($all, $index);
+        array_splice($tabel, $jumlahlist);
+        $data['lastpage'] = $lastpage;
+        $data['tabel'] = $tabel;
+        $data['jumlah'] = $jumlahdata;
+        return $data;
+    }
+    public function list_pujian($keyword, $jumlahlist, $index)
+    {
+        $where = "(nama like '%" . $keyword . "%' or komentar like '%" . $keyword . "%') and kategori = 'Pujian'";
+        $all = $this->db->table('komentar')->where($where)->orderBy("updated_at desc")->get()->getResultArray();
+        $jumlahdata = count($all);
+        $lastpage = ceil($jumlahdata / $jumlahlist);
+        $tabel = array_splice($all, $index);
+        array_splice($tabel, $jumlahlist);
+        $data['lastpage'] = $lastpage;
+        $data['tabel'] = $tabel;
+        $data['jumlah'] = $jumlahdata;
+        return $data;
+    }
+    public function list_masukan($keyword, $jumlahlist, $index)
+    {
+        $where = "(nama like '%" . $keyword . "%' or komentar like '%" . $keyword . "%') and kategori = 'Masukan'";
+        $all = $this->db->table('komentar')->where($where)->orderBy("updated_at desc")->get()->getResultArray();
+        $jumlahdata = count($all);
+        $lastpage = ceil($jumlahdata / $jumlahlist);
+        $tabel = array_splice($all, $index);
+        array_splice($tabel, $jumlahlist);
+        $data['lastpage'] = $lastpage;
+        $data['tabel'] = $tabel;
+        $data['jumlah'] = $jumlahdata;
+        return $data;
+    }
     public function update_skor($data, $id)
     {
         return $this->db->table('skor')->where('id', $id)->update($data);
@@ -197,5 +237,13 @@ class PesertaModel extends Model
     function input_visitor($data)
     {
         return $this->db->table('visitor')->insert($data);
+    }
+    function input_komentar($data)
+    {
+        return $this->db->table('komentar')->insert($data);
+    }
+    function list_nama()
+    {
+        return $this->db->table('peserta')->select('distinct(nama) as nama')->orderBy('nama asc')->get()->getResultArray();
     }
 }

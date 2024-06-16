@@ -32,6 +32,7 @@
                 <select class="form-select" id="status-visitor" aria-label="Kelompok">
                     <option value="Gembala/Pendeta" selected>Gembala/Pendeta</option>
                     <option value="Jemaat">Jemaat</option>
+                    <option value="Pengantar">Pengantar</option>
                 </select>
             </div>
         </div>
