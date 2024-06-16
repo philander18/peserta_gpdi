@@ -301,7 +301,7 @@ a.aktif {
 }
 
 /* Tampilan grup-checkin */
-.grup-checkin {
+.grup-checkin, .grup-skor {
   display: grid;
   grid-template-columns: repeat(auto-fit, 360px);
   place-content: center;
@@ -332,7 +332,7 @@ a.aktif {
 .konten-visitor .detail-visitor {
   grid-area: detail;
 }
-/* Modal form input keuangan */
+/* Modal form */
 div.form-modal {
   display: flex;
   align-items: center;
@@ -345,6 +345,25 @@ div.form-modal label {
 }
 div.form-modal input,div.form-modal textarea,div.form-modal select {
   flex: 3.2;
+}
+
+/* style game */
+.input-game {
+  display: grid;
+  grid-template-columns: minmax(360px, 450px) minmax(360px, 450px);
+  grid-template-rows: repeat(8, 40px);
+  grid-auto-flow: column;
+  place-content: center;
+  align-items: center;
+  margin-top: 15px;
+  gap: 1rem;
+}
+.input-game .input-kelompok-game {
+  display: grid;
+  grid-template-columns: 160px 200px;
+  gap: 1rem;
+  padding: 0.8rem;
+  box-sizing: border-box;
 }
 
 /* Ukuran tablet */
@@ -360,6 +379,10 @@ div.form-modal input,div.form-modal textarea,div.form-modal select {
   .konten-visitor .form-visitor {
     box-sizing: border-box;
     padding: 0.5rem;
+  }
+  .input-game {
+    grid-template-columns: minmax(360px, 450px);
+    grid-template-rows: repeat(16, 40px);
   }
 }
 /* Ukuran landscape mobile */

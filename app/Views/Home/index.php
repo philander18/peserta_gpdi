@@ -12,7 +12,7 @@
                 <div>
                     <ol class="list-gereja mb-0">
                         <?php foreach ($row["list"] as $list) : ?>
-                            <li><?= $list["nama"]; ?></li>
+                            <li><?= ucwords(strtolower($list["nama"])); ?></li>
                         <?php endforeach; ?>
                     </ol>
                 </div>

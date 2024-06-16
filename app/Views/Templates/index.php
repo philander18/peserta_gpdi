@@ -26,6 +26,7 @@
     <?= $this->include('Home/script'); ?>
     <?= $this->include('Checkin/script'); ?>
     <?= $this->include('Visitor/script'); ?>
+    <?= $this->include('Skor/script'); ?>
 </body>
 
 </html>

@@ -15,6 +15,7 @@ class Checkin extends BaseController
     }
     public function index(): string
     {
+        // d($this->PesertaModel->get_kelompok_nomor());
         $session = session();
         if (!is_null($this->request->getVar('kode'))) {
             if (!empty($this->PesertaModel->akses($this->request->getVar('kode')))) {

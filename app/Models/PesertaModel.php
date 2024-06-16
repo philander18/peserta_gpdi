@@ -26,22 +26,31 @@ class PesertaModel extends Model
     }
     public function list_kelompok()
     {
-        $list_kelompok = $this->db->table('peserta')->select('kelompok')->distinct('kelompok')->where("kelompok is not null")->orderBy('kelompok ASC')->get()->getResultArray();
-        if (empty($list_kelompok)) {
-            $peserta = [];
-        } else {
-            foreach ($list_kelompok as $row) {
-                $where = "kelompok = '" . $row['kelompok'] . "'";
+        $kelompok = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P'];
+        if ($this->get_kelompok_nomor()['nomor'] == 1) {
+            foreach ($kelompok as $row) {
                 $peserta[] = [
-                    'kelompok' => $row['kelompok'],
+                    'kelompok' => $row,
+                    'list' => []
+                ];
+            }
+            $peserta[] = [
+                'kelompok' => 'Tidak Masuk Kelompok',
+                'list' => [],
+            ];
+        } else {
+            foreach ($kelompok as $row) {
+                $where = "kelompok = '" . $row . "'";
+                $peserta[] = [
+                    'kelompok' => $row,
                     'list' => $this->db->table('peserta')->select('nama, gender, gereja, kelompok, nomor')->where($where)->get()->getResultArray(),
                 ];
             }
+            $peserta[] = [
+                'kelompok' => 'Tidak Masuk Kelompok',
+                'list' => $this->db->table('peserta')->select('nama, gender, gereja, kelompok, nomor')->where("kelompok is null and nomor is not null")->get()->getResultArray(),
+            ];
         }
-        $peserta[] = [
-            'kelompok' => 'Tidak Masuk Kelompok',
-            'list' => $this->db->table('peserta')->select('nama, gender, gereja, kelompok, nomor')->where("kelompok is null and nomor is not null")->get()->getResultArray(),
-        ];
         return $peserta;
     }
 
@@ -71,6 +80,43 @@ class PesertaModel extends Model
         $data['tabel'] = $tabel;
         $data['jumlah'] = $jumlahdata;
         return $data;
+    }
+    public function list_input_skor($pos)
+    {
+        $kelompok = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P'];
+        foreach ($kelompok as $row) {
+            $where = "kelompok = '" . $row . "' and pos = '" . $pos . "'";
+            if (empty($this->db->table('skor')->where($where)->orderBy('pos asc')->get()->getResultArray())) {
+                $id = 0;
+                $nilai = '';
+            } else {
+                $id = $this->db->table('skor')->where($where)->orderBy('pos asc')->get()->getResultArray()[0]['id'];
+                $nilai = $this->db->table('skor')->where($where)->orderBy('pos asc')->get()->getResultArray()[0]['nilai'];
+            }
+            $input[] = [
+                'kelompok' => $row,
+                'id' => $id,
+                'nilai' => $nilai,
+            ];
+        }
+        return $input;
+    }
+    public function list_skor()
+    {
+        $kelompok = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P'];
+        foreach ($kelompok as $row) {
+            $where = "kelompok = '" . $row . "'";
+            $skor[] = [
+                'kelompok' => $row,
+                'list' => $this->db->table('skor')->where($where)->orderBy('pos asc')->get()->getResultArray(),
+                'jumlah' => $this->db->table('skor')->select("sum(nilai) as jumlah")->where($where)->get()->getResultArray()[0]['jumlah']
+            ];
+        }
+        return $skor;
+    }
+    public function update_skor($data, $id)
+    {
+        return $this->db->table('skor')->where('id', $id)->update($data);
     }
     public function akses($kode)
     {
